@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
   mode: 'development',
   entry: {
-    skettinet: './src/client/skettinet.ts'
+    sketti: './src/client/sketti.ts'
   },
   output: {
     path: path.resolve(__dirname, 'dist/public/js'),
