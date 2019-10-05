@@ -13,12 +13,14 @@ create table users(
   created_at timestamp not null default now(),
   updated_at timestamp not null,
   username varchar(180) not null,
+  email varchar(255) not null,
   avatar varchar(255),
   first_name varchar(255),
   last_name varchar(255),
   born date not null,
   password_hash varchar not null,
   password_salt varchar not null,
+  work_title varchar not null,
   bio text,
   admin boolean not null default false,
   banned boolean not null default false,
@@ -28,3 +30,5 @@ create table users(
 create trigger user_updated 
   before update on users
   for each row execute procedure set_updated_timestamp();
+
+create unique index users_lower_email_idx on users(lower(email));
