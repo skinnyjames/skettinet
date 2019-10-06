@@ -1,10 +1,11 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 module.exports = {
   mode: 'development',
   entry: {
-    sketti: './src/client/sketti.ts'
+    skettinet: './src/client/skettinet.ts'
   },
   output: {
     path: path.resolve(__dirname, 'dist/public/js'),
@@ -18,6 +19,24 @@ module.exports = {
           'vue-style-loader',
           {
             loader: 'css-loader',
+          }
+        ]
+      },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires sass-loader@^7.0.0
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                fiber: require('fibers'),
+                indentedSyntax: true // optional
+              },
+            }
           }
         ]
       },
@@ -42,7 +61,8 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.vue', '.json']
   }, 
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new VuetifyLoaderPlugin(),
   ],
   devtool: '#eval-source-map'
 }

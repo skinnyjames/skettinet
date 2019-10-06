@@ -22,11 +22,7 @@ app.use('/upload', uploadRoutes)
 app.get('/', async (req, res) => {
   // check for first installation
   let required = await SetupModel.setupRequired()
-  if (required) {
-    res.render('setup', {})
-  } else {
-    res.render('index', {})
-  }
+  res.render('index', { setup: required })
 });
 
 if (require.main === module) {
