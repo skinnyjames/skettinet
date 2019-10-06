@@ -6,14 +6,27 @@ import vuetify from './plugins/vuetify'
 import Sketti from './components/sketti.vue'
 import Setup from './components/setup.vue'
 import Forum from './components/forum.vue'
+import Register from './components/register/register.vue'
+import VueResource from 'vue-resource';
 
 Vue.config.devtools = true
 Vue.use(Router)
 Vue.use(Vuex)
+Vue.use(VueResource);
 
 const routes = [
-  { path: '/', component: Forum },
-  { path: '/setup', component: Setup }
+  { 
+    path: '/', 
+    component: Forum, 
+    async beforeEnter(to, from, next) {
+      if (from.path !== '/') {
+        await store.dispatch('me/get')
+      }
+      next()
+    } 
+  },
+  { path: '/setup', component: Setup }, 
+  { path: '/register', component: Register }
 ]
 
 export const router = new Router({
@@ -24,7 +37,19 @@ declare global {
   interface Window { setup: boolean; }
 }
 
-new Vue({
+const interceptor = (request) => {
+  router.app.$store.commit('app/loading', true)
+  return function(response) {
+    if (response.status == 303) {
+      router.push('/')
+    }
+    router.app.$store.commit('app/loading', false)
+  }
+}
+
+(Vue as any).http.interceptors.push(interceptor)
+
+export const vue = new Vue({
   vuetify,
   store, 
   router,
@@ -35,3 +60,4 @@ new Vue({
     }
   },
 }).$mount('#app')
+

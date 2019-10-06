@@ -1,38 +1,19 @@
 <template>
   <div id="forum">
-    <div id="forum__menu">
-      <div id="forum__menu__login">
-        <v-form>
-          <v-container>
-            <h4>
-              <v-icon>mdi-anchor</v-icon>
-              Welcome
-            </h4>
-            <v-text-field
-              v-model="user"
-              label="Username or Email"
-              dense
-              :error-messages="username.errors"></v-text-field>
-            <v-text-field
-              v-model="pass"
-              type="password"
-              :error-messages="password.errors"
-              dense
-              label="Password" required ></v-text-field>
-            <v-btn block="true" ripple="true" color="Primary">Login</v-btn>
-          </v-container>
-        </v-form>
-      </div>
-    </div>
     <div id="forum__posts">
       <v-card min-width="100%" min-height="300px">
         <div class="post__title">
-          <img class="category__image" height="50" src="https://cdn1.vectorstock.com/i/1000x1000/28/05/cartoon-hamburger-icon-vector-2862805.jpg" />
-          <div class="post__title__details">
-            <h3 class="headline">
-              Something about the way the Birds Sound takes me back to your town
-            </h3>
-            <span>10/21/2019 @ 10:00 AM</span>
+          <div class="post__title--left">
+            <img class="category__image" height="50" src="https://cdn1.vectorstock.com/i/1000x1000/28/05/cartoon-hamburger-icon-vector-2862805.jpg" />
+            <div class="post__title__details">
+              <h3 class="headline">
+                Something about the way the Birds Sound takes me back to your town
+              </h3>
+              <span>10/21/2019 @ 10:00 AM</span>
+            </div>
+          </div>
+          <div>
+            <h1 style="width: 40px;">+5</h1>
           </div>
         </div>
         <div class="post">
@@ -46,23 +27,28 @@
           </div>
         </div>
         <div class="post__actions">
+          <div class="post__mods">
+            <v-icon color="white">mdi-chevron-left</v-icon>
+            <span>Ziggy says: "Whoop Whoop" +5</span>
+            <v-icon color="white">mdi-chevron-right</v-icon>
+          </div>
           <v-card-actions class="space-between">
             <div class="buttons-left">
-              <v-btn ripple="true">
+              <v-btn :ripple="true">
                 3 comments
               </v-btn>
-              <v-btn ripple="true">
+              <v-btn :ripple="true">
                 <v-icon>mdi-reply</v-icon> Reply
               </v-btn>
-              <v-btn ripple="true">
+              <v-btn :ripple="true">
                 <v-icon>mdi-tooltip-plus-outline</v-icon> Grant XP
               </v-btn>
             </div>
             <div class="buttons-right">
-              <v-btn ripple="true">
+              <v-btn :ripple="true">
                 <v-icon>mdi-square-edit-outline</v-icon> Edit
               </v-btn>
-              <v-btn ripple="true">
+              <v-btn :ripple="true">
                 <v-icon>mdi-delete</v-icon> Delete
               </v-btn>
             </div>
@@ -76,26 +62,15 @@
 
 <script lang="ts">
   import { mapState } from 'vuex'
+  import Modal from './global/modal.vue'
 
   export default {
+    components: {
+      'modal': Modal,
+    },
     computed: {
-      ...mapState('app', ['username', 'password']),
-      user: {
-        get() {
-          return this.username.value
-        },
-        set(value) {
-          this.$store.commit('app/username', value)
-        }
-      },
-      pass: {
-        get() {
-          return this.password.value
-        },
-        set(value) {
-          this.$store.commit('app/password', value)
-        }
-      }
+      ...mapState('app', ['username', 'password', 'registering']),
+
     }
   }
 </script>
@@ -108,8 +83,6 @@
     border-right: 1px solid #ccc;
   }
   #forum__posts {
-    width: calc(100% - 300px);
-    margin-left: 300px;
     padding: 20px;
   }
   h4 {
@@ -120,6 +93,11 @@
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+  }
+
+  .post__title--left {
+    display: flex;
   }
   .category__image {
     margin-right: 20px;
@@ -147,6 +125,7 @@
 
   .post__actions {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     border-top: 1px solid #ccc;
   }
@@ -154,5 +133,14 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+  }
+  .post__mods {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0, 0, 0, .8);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>

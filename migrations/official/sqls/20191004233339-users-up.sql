@@ -11,7 +11,7 @@ $$;
 create table users(
   id serial primary key,
   created_at timestamp not null default now(),
-  updated_at timestamp not null,
+  updated_at timestamp not null default now(),
   username varchar(180) not null,
   email varchar(255) not null,
   avatar varchar(255),

@@ -13,4 +13,15 @@ const mailGun: any = new MailGun({
 })
 
 export = {
+  resetPassword(details: any) {
+    const html = `
+      Please go to ${details.host}/password/${details.uuid} to reset your password
+    `
+    return mailGun.sendEmail({
+      html: html,
+      to: details.email,
+      from: 'ziggy@sketti.net',
+      subject: 'Password reset instructions'
+    })
+  }
 }

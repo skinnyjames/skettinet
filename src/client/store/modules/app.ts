@@ -1,29 +1,17 @@
 import { router } from './../../skettinet'
+import { vue } from './../../skettinet'
 
 const state = {
-  username: {
-    value: '',
-    error: '',
-  },
-  password: {
-    value: '',
-    error: ''
-  }
+  loading: false,
 }
 const getters = {
 }
 const actions = {
 }
 const mutations = {
-  username(state, value) {
-    state.username.value = value
+  loading(state, data: boolean) {
+    state.loading = data
   },
-  password(state, value) {
-    state.password.value = value
-  },
-  error(state, data) {
-    state[data.field].error = data.error
-  }
 }
 
 export default {

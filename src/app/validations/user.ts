@@ -1,14 +1,14 @@
 import Validator from '../lib/validator'
 
 const userSchema = new Validator({
-  presence: ['username', 'first_name', 'last_name', 'bio', 'born', 'email','password', 'password_confirmation'],
+  presence: ['username', 'work_title', 'first_name', 'last_name', 'bio', 'born', 'email','password', 'password_confirmation'],
   regex: {
-    born: /^\d{2}\/\d{2}\/\d{4}$/
+    born: /^\d{4}-\d{2}-\d{2}$/
   },
   custom: [
-    (artistData: any) => {
+    (user: any) => {
       return {
-        condition: artistData.password == artistData.password_confirmation, 
+        condition: user.password == user.password_confirmation, 
         message: "passwords don't match", 
         fields: ['password', 'password_confirmation']
       }
@@ -17,7 +17,7 @@ const userSchema = new Validator({
 })
 
 const loginSchema = new Validator({
-  presence: ['email_or_username', 'password']
+  presence: ['username', 'password']
 })
 
 const passwordReset = new Validator({

@@ -10,7 +10,7 @@ const stat = util.promisify(fs.stat)
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/temp/')
+    cb(null, path.join(__dirname, '.', '../../public/temp/'))
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname))
@@ -20,6 +20,7 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 const router =  Router()
 router.post('/avatar', upload.single('file'), (req, res) => {
+  console.log(req.file)
   res.send({
     ...req.file,
     status: 'success'

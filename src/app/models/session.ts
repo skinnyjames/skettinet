@@ -5,7 +5,7 @@ import moment from 'moment'
 
 export namespace SessionModel {
   export async function get(id: string): Promise<Session> {
-    let sql = 'select * from sessions where id = ${id}'
+    let sql = 'select * from sessions where guid = ${id}'
     let session: Session = await db.oneOrNone(sql, { id: id })
     if (!session) {
       throw new SessionError('no session')
@@ -26,7 +26,7 @@ export namespace SessionModel {
   export async function update(id: string): Promise<void> {
     await this.get(id)
     const expires = moment().add(1, 'day').format()
-    const sql = 'update sessions set expires = ${expires} where id = ${id}'
+    const sql = 'update sessions set expires = ${expires} where guid = ${id}'
     await db.none(sql, { id: id, expires: expires })
   }
 
@@ -37,11 +37,12 @@ export namespace SessionModel {
     const id =  data.user.id
     const payload = { id, expires }
     let result = await db.one(query, payload)
-    return result.id
+    console.log(result, 'SesSION RESULT')
+    return result.guid
   }
 
   export async function deleteById(id: string): Promise<void> {
-    let sql = 'delete from sessions where id = ${id}'
+    let sql = 'delete from sessions where guid = ${id}'
     await db.none(sql, {id: id})
   }
 
