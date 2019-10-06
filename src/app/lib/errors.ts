@@ -1,5 +1,3 @@
-import util from 'util'
-
 export interface iValidationError {
   message: string
   type: string
