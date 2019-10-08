@@ -27,8 +27,11 @@
         return this.$store.state.app.loading
       }
     },
-    created() {
-      this.$store.dispatch('me/get')
+    async created() {
+      this.$store.commit('app/loading', true)
+      await this.$store.dispatch('me/get'),
+      await this.$store.dispatch('forum/posts')
+      this.$store.commit('app/loading', false)
     }
   }
 </script>

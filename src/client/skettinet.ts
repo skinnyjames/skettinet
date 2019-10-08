@@ -7,6 +7,9 @@ import Sketti from './components/sketti.vue'
 import Setup from './components/setup.vue'
 import Forum from './components/forum.vue'
 import Register from './components/register/register.vue'
+import Post from './components/posts/post.vue'
+import NewPost from './components/posts/new.vue'
+
 import VueResource from 'vue-resource';
 
 Vue.config.devtools = true
@@ -20,13 +23,17 @@ const routes = [
     component: Forum, 
     async beforeEnter(to, from, next) {
       if (from.path !== '/') {
-        await store.dispatch('me/get')
+        store.commit('app/loading', true)
+        await store.dispatch('me/get'),
+        await store.dispatch('forum/posts')
+        store.commit('app/loading', false)
       }
       next()
     } 
   },
   { path: '/setup', component: Setup }, 
-  { path: '/register', component: Register }
+  { path: '/register', component: Register },
+  { path: '/posts/new', component: NewPost }
 ]
 
 export const router = new Router({

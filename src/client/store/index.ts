@@ -5,6 +5,9 @@ import app from './modules/app'
 import register from './modules/register'
 import login from './modules/login'
 import me from './modules/me'
+import forum from './modules/forum'
+import post from './modules/post'
+import categories from './modules/categories'
 
 Vue.config.devtools = true
 Vue.use(Vuex)
@@ -15,6 +18,9 @@ export default new Vuex.Store({
     app,
     login,
     register,
-    me
+    me,
+    forum,
+    post,
+    categories
   }
 })
