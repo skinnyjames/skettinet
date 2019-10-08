@@ -1,4 +1,4 @@
-import { vue } from './../../skettinet'
+import { vue, router } from './../../skettinet'
 
 const state = {
 }
@@ -46,6 +46,8 @@ const actions = {
     commit('clearErrors')
     try {
       const response = await vue.$http.post('/posts', data)
+      router.push('/')
+      commit('clearAll')
     } catch (e) {
       if (e.body.type == 'ValidationError') {
         e.body.errors.forEach((error: any) => {

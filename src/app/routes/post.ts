@@ -16,4 +16,22 @@ router.get('/', async(req, res) => {
   }
 })
 
+router.post('/', async(req, res) => {
+  try {
+    const data = req.body
+    const id = await PostModel.create(data)
+    res.statusCode = 200
+    res.send({id: id})
+  } catch(e) {
+    if (e instanceof ValidationError) {
+      res.statusCode = 401
+      res.send(e)
+    } else {
+      console.log(e)
+      res.statusCode = 500
+      res.send('Something went wrong')
+    }
+  }
+})
+
 export = router
