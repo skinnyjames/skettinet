@@ -16,20 +16,45 @@ const state = {
   id: null,
 }
 const getters = {
+  experienceTitle(state) {
+    const exp = state.experience
+    let title = ''
+    if (exp < 0) {
+      title = 'SkettiShamed'
+    } 
+    if (exp === 0) {
+      title = 'Newbie'
+    }
+    if (exp > 0) {
+      title = 'SkettiPHILE'
+    }
+    return title
+  },
+  title(state) {
+    let title = ''
+    return (exp) => {
+      if (exp < 0) {
+        title = 'SkettiShamed'
+      } 
+      if (exp === 0) {
+        title = 'Newbie'
+      }
+      if (exp > 0) {
+        title = 'SkettiPHILE'
+      }
+      return title
+    }
+  }
 }
 const actions = {
   async get({commit}) {
     try {
-      commit('app/loading', true, { root: true })
       let response: any = await fetch('/users/me')
       const body = await response.json()
-      console.log(body)
       if (body.authenticated) {
         commit('setProps', body)
-        commit('app/loading', false, { root: true })
       }
     } catch(e) {
-      console.log(e)
     }
   }
 }

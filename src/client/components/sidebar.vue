@@ -32,10 +32,11 @@
           </v-avatar>
         </v-badge>
         <div class="me__details__words">
-          <span>{{ username }}</span>
+          <h4>{{ username }}</h4>
+          <span>{{ title }}</span>
         </div>
         <div class="me__actions">
-          <v-btn :ripple="true">New Post</v-btn>
+          <v-btn @click="newpost" :ripple="true">New Post</v-btn>
         </div>
       </div>
     </div>
@@ -65,11 +66,18 @@
     
     computed: {
       ...compute,
-      ...mapState('me', ['id', 'authenticated', 'admin', 'username', 'experience'])
+      ...mapState('me', ['id', 'authenticated', 'admin', 'username', 'experience', 'avatar']),
+      title() {
+        return this.$store.getters['me/experienceTitle']
+      }
     },
     methods: {
       login() {
         this.$store.dispatch('login/login')
+      },
+      newpost() {
+        this.$store.commit('post/clearAll')
+        this.$router.push('/posts/new')
       }
     },
     mounted() {
@@ -107,6 +115,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   .me__actions {
     margin-top: 15px;

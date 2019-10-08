@@ -7,7 +7,8 @@ import cookieParser from 'cookie-parser'
 import setupRoutes from './routes/setup'
 import uploadRoutes from './routes/upload'
 import userRoutes from './routes/user'
-
+import postRoutes from './routes/post'
+import categoryRoutes from './routes/category'
 const app = express();
 const port = 8081;
 
@@ -20,6 +21,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/setup', setupRoutes)
 app.use('/upload', uploadRoutes)
 app.use('/users', userRoutes)
+app.use('/posts', postRoutes)
+app.use('/categories', categoryRoutes)
 
 app.get('/', async (req, res) => {
   // check for first installation
