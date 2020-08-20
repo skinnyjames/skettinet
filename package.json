@@ -17,7 +17,7 @@
   "dependencies": {
     "@types/bluebird": "^3.5.27",
     "@types/bluebird-global": "^3.5.12",
-    "bcrypt": "^3.0.5",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "braces": ">=2.3.1",
